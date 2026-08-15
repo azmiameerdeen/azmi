@@ -713,6 +713,9 @@ body {
   .back-to-top { bottom: 1.2rem; right: 1.2rem; }
   .section { padding: 4.5rem 6vw; }
   .about-photo { width: 96px; height: 96px; }
+  .cursor { width: 5px; height: 1em; }
+  .t-cursor { width: 4px; height: 0.9em; }
+  .cursor-glow { display: none; }
 }
 
 @media (max-width: 480px) {
