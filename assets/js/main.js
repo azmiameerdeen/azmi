@@ -258,3 +258,17 @@
     });
   });
 })();
+
+// Visitor counter (free API, no database)
+(function () {
+  const el = document.getElementById("visitCount");
+  if (!el) return;
+  fetch("https://api.counterapi.dev/v1/azmi-blog/visits/up")
+    .then((r) => r.json())
+    .then((d) => {
+      el.textContent = (d && d.count !== undefined) ? d.count : "—";
+    })
+    .catch(() => {
+      el.textContent = "—";
+    });
+})();

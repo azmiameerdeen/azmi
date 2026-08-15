@@ -974,3 +974,12 @@ body {
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
+
+/* Visitor counter */
+.footer .visits {
+  margin-top: 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--accent-2);
+}
+.footer .visits i { color: var(--accent); }
