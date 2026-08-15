@@ -258,27 +258,3 @@
     });
   });
 })();
-
-// Visitor counter (self-hosted Cloudflare Worker)
-(function () {
-  const el = document.getElementById("visitCount");
-  if (!el) return;
-  const API = "https://azmi-counter.YOUR-SUBDOMAIN.workers.dev"; // TODO: replace after deploy
-
-  async function refresh() {
-    try {
-      const r = await fetch(API + "/count");
-      const d = await r.json();
-      el.textContent = d.count;
-    } catch (e) {
-      el.textContent = "—";
-    }
-  }
-
-  refresh();
-
-  if (!localStorage.getItem("azmi_counted")) {
-    localStorage.setItem("azmi_counted", "1");
-    fetch(API + "/hit", { method: "POST" }).then(refresh).catch(function () {});
-  }
-})();

@@ -974,29 +974,3 @@ body {
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
-
-/* Visitor counter */
-.footer .visits {
-  margin-top: 0.6rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.55rem;
-  font-family: var(--mono);
-  font-size: 0.8rem;
-  color: var(--muted);
-}
-.footer .visits i { color: var(--accent); }
-.footer .visits span { letter-spacing: 0.5px; }
-.footer .visits .count {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 26px;
-  padding: 1px 7px;
-  background: var(--panel-2);
-  color: var(--accent);
-  border: 1px solid var(--accent);
-  border-radius: 5px;
-  box-shadow: 0 0 12px rgba(34, 211, 238, 0.35);
-}
