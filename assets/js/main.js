@@ -249,6 +249,21 @@
   });
 })();
 
+// Decode obfuscated emails (anti-scraping)
+(function () {
+  function decode(s) { return s.split("").reverse().join(""); }
+  document.querySelectorAll("[data-e]").forEach(function (el) {
+    var email = decode(el.getAttribute("data-e"));
+    if (el.tagName === "A") {
+      el.setAttribute("href", "mailto:" + email);
+      var span = el.querySelector(".obf-email");
+      if (span) span.textContent = email;
+    } else {
+      el.textContent = email;
+    }
+  });
+})();
+
 // Stagger reveal delays within groups
 (function () {
   document.querySelectorAll(".skills-grid, .projects-grid, .certs-grid, .timeline, .contact-links").forEach((group) => {
