@@ -708,6 +708,7 @@ body {
   .nav-toggle { display: flex; z-index: 101; }
   .hero { padding-top: 6rem; gap: 2rem; }
   .hero-meta { gap: 0.9rem; }
+  .scroll-indicator { display: none; }
   .terminal-body { font-size: 0.78rem; padding: 1rem; overflow-x: auto; }
   .terminal-title { display: none; }
   .back-to-top { bottom: 1.2rem; right: 1.2rem; }
