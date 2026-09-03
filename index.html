@@ -5,7 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Mohamad Azmi — IT Security Infrastructure Specialist & Linux Engineer. 12+ years in server administration, cybersecurity, and IT operations." />
   <title>Mohamad Azmi — Assistant Manager, IT/OT Infrastructure &amp; Security</title>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
+
+  <!-- Open Graph / social preview -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Mohamad Azmi — Assistant Manager, IT/OT Infrastructure &amp; Security" />
+  <meta property="og:description" content="IT Security Infrastructure Specialist &amp; Linux Engineer. 12+ years in server administration, cybersecurity, and IT operations." />
+  <meta property="og:url" content="https://azmiameerdeen.github.io/azmi/" />
+  <meta property="og:image" content="https://azmiameerdeen.github.io/azmi/assets/images/profile.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Mohamad Azmi — Assistant Manager, IT/OT Infrastructure &amp; Security" />
+  <meta name="twitter:description" content="IT Security Infrastructure Specialist &amp; Linux Engineer. 12+ years in server administration, cybersecurity, and IT operations." />
+  <meta name="twitter:image" content="https://azmiameerdeen.github.io/azmi/assets/images/profile.jpg" />
+
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -15,14 +30,14 @@
 <body>
   <div class="scroll-progress" id="scrollProgress"></div>
   <div class="cursor-glow" id="cursorGlow"></div>
-  <canvas id="matrix"></canvas>
+  <canvas id="matrix" aria-hidden="true"></canvas>
   <div class="scanlines" aria-hidden="true"></div>
   <div class="grid-overlay" aria-hidden="true"></div>
 
   <!-- Navigation -->
   <nav class="navbar" id="navbar">
     <a href="#home" class="nav-logo">azmi<span>@</span>linux<span>:~$</span></a>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="navLinks">
