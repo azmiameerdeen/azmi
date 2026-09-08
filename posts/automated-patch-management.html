@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ansible handles the patching. The operations problem — scheduling, evidence, and two people not starting the same run at once — is what I ended up building a self-hosted GUI for." />
+  <title>Automating patch management with Ansible — Mohamad Azmi</title>
+
+  <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg" />
+  <link rel="canonical" href="https://azmiameerdeen.github.io/azmi/posts/automated-patch-management.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Automating patch management with Ansible, and the GUI I built so it would actually get used" />
+  <meta property="og:description" content="Dry-run discipline, a concurrency guard, and treating audit evidence as a feature rather than a byproduct." />
+  <meta property="og:url" content="https://azmiameerdeen.github.io/azmi/posts/automated-patch-management.html" />
+  <meta property="article:published_time" content="2026-09-08" />
+  <meta property="article:author" content="Mohamad Azmi" />
+  <meta name="twitter:card" content="summary" />
+
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Automating patch management with Ansible, and the GUI I built so it would actually get used",
+    "datePublished": "2026-09-08",
+    "author": { "@type": "Person", "name": "Mohamad Azmi Bin Seeni Ameerdeen", "url": "https://azmiameerdeen.github.io/azmi/" },
+    "mainEntityOfPage": "https://azmiameerdeen.github.io/azmi/posts/automated-patch-management.html",
+    "keywords": "Ansible, patch management, automation, ISO 27001, vulnerability remediation, FastAPI, Docker"
+  }
+  </script>
+</head>
+<body>
+  <div class="grid-overlay" aria-hidden="true"></div>
+
+  <main class="article-wrap">
+    <a href="../index.html#writing" class="article-back"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> back to azmi@linux</a>
+
+    <article>
+      <header class="article-head">
+        <div class="post-meta">
+          <time datetime="2026-09-08">8 September 2026</time>
+          <span class="post-dot" aria-hidden="true">·</span>
+          <span>7 min read</span>
+        </div>
+        <h1>Automating patch management with Ansible, and the GUI I built so it would actually get used</h1>
+        <div class="post-tags">
+          <span>Ansible</span><span>Automation</span><span>Patch Management</span><span>ISO 27001</span>
+        </div>
+      </header>
+
+      <div class="article-body">
+        <p>
+          Patching is the least glamorous control on the ISO 27001 checklist and the one that slips
+          first. Not because nobody knows how to run <code>dnf update</code> — because doing it
+          across <strong>121 servers</strong>, on a schedule, with evidence, without two people
+          starting the same run at once, is an operations problem wearing a Linux problem's clothes.
+        </p>
+        <p>
+          Ansible solved the Linux half years ago. This is about the other half, and the tool I
+          ended up building because the other half is where the failures actually live.
+        </p>
+
+        <h2>Ansible gets you most of the way</h2>
+        <p>A patch playbook is not the hard part. The shape of it is boring on purpose:</p>
+        <pre><code>- name: Apply security updates
+  hosts: "{{ target | default('patch_wave1') }}"
+  serial: "{{ batch | default('20%') }}"
+  become: true
+  tasks:
+    - name: Patch
+      ansible.builtin.dnf:
+        name: "*"
+        security: true
+        state: latest
+
+    - name: Does this host need a reboot?
+      ansible.builtin.command: needs-restarting -r
+      register: needs_reboot
+      failed_when: false
+      changed_when: false
+
+    - name: Reboot only if the kernel or core libraries moved
+      ansible.builtin.reboot:
+        reboot_timeout: 900
+      when: needs_reboot.rc == 1</code></pre>
+        <p>
+          Two lines are doing the real work. <code>serial</code> is what separates "patching" from
+          "an outage" — it turns a fleet-wide change into waves, so a bad update takes out a slice
+          instead of a tier. And gating the reboot on <code>needs-restarting -r</code> rather than
+          rebooting unconditionally is the difference between a maintenance window you finish and one
+          you don't.
+        </p>
+        <p>
+          What the playbook does <em>not</em> give you is the thing an auditor asks for six months
+          later: who ran it, when, against which hosts, with what output, and can you show me the
+          last two quarters of that.
+        </p>
+
+        <h2>Why a GUI, when the CLI works fine</h2>
+        <p>
+          I'm perfectly happy driving Ansible from a terminal. That was never the constraint. Three
+          other things were:
+        </p>
+        <ul>
+          <li>
+            <strong>Evidence.</strong> "We patch monthly" is not an audit answer. A list of job
+            records with timestamps, host lists, full captured output and a diff against last
+            month's report <em>is</em> an audit answer.
+          </li>
+          <li>
+            <strong>Handover.</strong> At 2am, whoever is on call should not have to remember the
+            right combination of <code>--limit</code>, <code>--tags</code> and extra-vars.
+          </li>
+          <li>
+            <strong>Scheduling with a memory.</strong> cron will cheerfully start a second patch run
+            while the first one is still going, and never mention it.
+          </li>
+        </ul>
+        <p>
+          So I built <strong>Ops Workflow</strong>: a FastAPI app behind an nginx TLS terminator, one
+          Docker Compose stack, mounting the Ansible tree and the SSH keys, with SQLite for job
+          history. It's a private tool I write and maintain myself, sized for one estate rather than
+          for distribution — the design decisions below are the ones that mattered for running it
+          against 121 servers, not a general framework.
+        </p>
+        <pre><code>browser ──► nginx (443 TLS) ──► app (FastAPI + scheduler)
+
+app mounts:
+  ├── /etc/ansible   playbooks, inventory, cfg
+  ├── /root/.ssh     keys, read-only
+  └── ./data         SQLite: jobs, schedules, MFA</code></pre>
+        <p>
+          Nothing exotic. The interesting part isn't the stack, it's which guard rails turned out to
+          matter.
+        </p>
+
+        <h2>The guard rails are the product</h2>
+
+        <h3>Dry run is on the way to the real run, not beside it</h3>
+        <p>
+          The run panel is ordered the way the work should be ordered: lint, syntax check,
+          <code>--check --diff</code>, then the real run behind a type-to-confirm modal. Putting the
+          destructive action last and behind an extra deliberate step costs about four seconds and
+          removes an entire category of mistake.
+        </p>
+
+        <h3>The same playbook cannot start twice</h3>
+        <p>
+          This is the guard I care about most, because it's the failure I could actually see coming.
+          A schedule fires at 02:00. Someone clicks Run at 02:01 because they didn't know the
+          schedule existed. Now there are two <code>ansible-playbook</code> processes against the
+          same hosts, fighting over the same package manager lock.
+        </p>
+        <p>
+          The second attempt is refused — <em>already running as job 412</em> — rather than allowed
+          to race. Schedules carry the same rule as skip-if-running, so a slow wave that overruns its
+          window doesn't get lapped by the next one.
+        </p>
+        <div class="callout">
+          <p>
+            <strong>Concurrency bugs in ops tooling don't announce themselves.</strong> They show up
+            as a corrupted RPM database on one host, weeks later, and nobody connects it back to two
+            runs that overlapped by ninety seconds. Refuse the second run.
+          </p>
+        </div>
+
+        <h3>Failed hosts rerun without rerunning everything</h3>
+        <p>
+          Ansible already writes a <code>.retry</code> file listing the hosts that failed. Surfacing
+          that as a <em>rerun failed hosts</em> button means the response to "three of forty hosts
+          timed out" is one click against three hosts, not a second full wave against forty.
+        </p>
+
+        <h2>Evidence is a feature, not a byproduct</h2>
+        <p>
+          Every run is a job record: status, host list, full log, replayable. Reports render as text,
+          CSV-as-table, sandboxed HTML or JSON, and — the part that turned out to matter most — any
+          two reports can be compared as a unified diff.
+        </p>
+        <p>
+          That diff view is what makes a compliance conversation short. Last month's report against
+          this month's, showing exactly which hosts moved and which didn't. The ones that
+          <em>didn't</em> move are the interesting ones, and before this they were invisible unless
+          you went looking.
+        </p>
+        <p>
+          Logs grow without limit if you let them, so retention is automatic:
+          <code>GUI_AUTOCLEANUP_DAYS</code> defaults to 90 and sweeps finished jobs, their log files
+          and old reports once a day. It never touches a running job.
+        </p>
+
+        <h2>Notify on start, not only on finish</h2>
+        <p>
+          Scheduled jobs push a Telegram message when they start and when they finish, and there's a
+          generic webhook (JSON or Slack-shaped) for teams that live somewhere else.
+        </p>
+        <p>
+          The start notification is the one people leave out, and it's the one that catches the worst
+          failure mode: a scheduled job that <em>silently never fired</em>. A finish-only
+          notification is indistinguishable from a scheduler that quietly died — in both cases your
+          phone stays quiet. Announcing the start turns absence into a signal.
+        </p>
+        <p>
+          Login attempts alert the same way — success, failure, and bad MFA code, with IP, timestamp
+          and user-agent.
+        </p>
+
+        <h2>The tradeoffs I took on purpose</h2>
+        <p>
+          This is where a reviewer would push, so I'd rather push first. Every one of these is
+          written into the README, because a tool whose limits are undocumented gets trusted further
+          than it deserves:
+        </p>
+        <ul>
+          <li>
+            <strong>Playbooks run as root inside the container.</strong> That's the same privilege
+            they had when I ran them from a root shell, which is what this replaced — but it is not a
+            sandbox, and it shouldn't be mistaken for one. It lives behind the firewall.
+          </li>
+          <li>
+            <strong>It is single-admin by design.</strong> One username, one password. Fine for me;
+            not fine for a team that needs per-person accountability. That case wants SSO in front of
+            it, not a second row in the settings table.
+          </li>
+          <li>
+            <strong>The API token bypasses MFA.</strong> A static bearer token for CI gets the same
+            access as a logged-in session with no second factor. It is a root password with a
+            friendlier name, and it should be rotated like one.
+          </li>
+          <li>
+            <strong>MFA recovery ends in a container exec.</strong> Eight one-time recovery codes at
+            enrolment, and if those are gone too you clear the MFA state out of SQLite by hand.
+            Blunt, documented, and preferable to a self-service reset path that becomes the weakest
+            link in the auth story.
+          </li>
+        </ul>
+        <p>
+          Writing these down was not a formality. Half of them changed shape once I had to justify
+          them in a paragraph.
+        </p>
+
+        <h2>Where it landed</h2>
+        <p>
+          The number that matters isn't in the tool, it's in what changed after it: patch
+          compliance now consistently meets our KPI target, and vulnerability counts coming out of
+          the vulnerability management scans have dropped as a direct result — patching stopped
+          being the thing that fell behind between audits and became something that just runs.
+          That's the outcome the report diff and the concurrency guard were built to protect; the
+          software was never really the point.
+        </p>
+
+        <h2>What I'd do next</h2>
+        <ul>
+          <li><strong>Per-person identity</strong> via an SSO-aware reverse proxy, so the audit trail says who rather than <code>admin</code>.</li>
+          <li><strong>Drop the run privilege</strong> from root to a scoped account with a narrow sudoers policy on the targets.</li>
+          <li><strong>Wire the report diff into the CAB pack</strong> so change review gets last month's delta without anyone assembling it by hand.</li>
+        </ul>
+
+        <p>
+          The automation was never the interesting part. Ansible has been able to patch a fleet for a
+          decade. What took the work was making the thing safe to run at 2am, and making it produce,
+          without anyone having to remember to, the evidence that it ran at all.
+        </p>
+      </div>
+
+      <footer class="article-foot">
+        <p>
+          Written by Mohamad Azmi — Assistant Manager, IT/OT Infrastructure &amp; Security at
+          Westports Malaysia.
+          <a href="../index.html#contact">Get in touch</a> ·
+          <a href="../feed.xml">RSS</a>
+        </p>
+      </footer>
+    </article>
+  </main>
+</body>
+</html>

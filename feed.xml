@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mohamad Azmi — Writing</title>
+    <link>https://azmiameerdeen.github.io/azmi/</link>
+    <description>Field notes on Linux infrastructure, virtualization and security operations.</description>
+    <language>en</language>
+    <atom:link href="https://azmiameerdeen.github.io/azmi/feed.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 08 Sep 2026 09:00:00 +0800</lastBuildDate>
+
+    <item>
+      <title>Automating patch management with Ansible, and the GUI I built so it would actually get used</title>
+      <link>https://azmiameerdeen.github.io/azmi/posts/automated-patch-management.html</link>
+      <guid isPermaLink="true">https://azmiameerdeen.github.io/azmi/posts/automated-patch-management.html</guid>
+      <pubDate>Tue, 08 Sep 2026 09:00:00 +0800</pubDate>
+      <description>Ansible could always patch a fleet. Making it safe to run at 2am — dry-run discipline, a guard that refuses a second concurrent run, and audit evidence produced as a byproduct rather than assembled by hand — is where the work went.</description>
+    </item>
+  </channel>
+</rss>

@@ -19,15 +19,52 @@
   <meta name="twitter:title" content="Mohamad Azmi — Assistant Manager, IT/OT Infrastructure &amp; Security" />
   <meta name="twitter:description" content="IT Security Infrastructure Specialist &amp; Linux Engineer. 12+ years in server administration, cybersecurity, and IT operations." />
   <meta name="twitter:image" content="https://azmiameerdeen.github.io/azmi/assets/images/profile.jpg" />
+  <meta property="og:image:alt" content="Portrait of Mohamad Azmi" />
+  <meta name="twitter:image:alt" content="Portrait of Mohamad Azmi" />
+  <meta name="author" content="Mohamad Azmi Bin Seeni Ameerdeen" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#05080f" />
+  <link rel="canonical" href="https://azmiameerdeen.github.io/azmi/" />
+  <link rel="alternate" type="application/rss+xml" title="Mohamad Azmi — Writing" href="https://azmiameerdeen.github.io/azmi/feed.xml" />
 
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous" />
   <link rel="stylesheet" href="assets/css/style.css" />
+  <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Mohamad Azmi Bin Seeni Ameerdeen",
+    "alternateName": "Mohamad Azmi",
+    "url": "https://azmiameerdeen.github.io/azmi/",
+    "image": "https://azmiameerdeen.github.io/azmi/assets/images/profile.jpg",
+    "jobTitle": "Assistant Manager \u2014 IT/OT Infrastructure & Security",
+    "worksFor": { "@type": "Organization", "name": "Westports Malaysia" },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Klang",
+      "addressRegion": "Selangor",
+      "addressCountry": "MY"
+    },
+    "sameAs": [
+      "https://www.linkedin.com/in/mohamadazmi/",
+      "https://github.com/azmiameerdeen"
+    ],
+    "knowsAbout": [
+      "Linux system administration", "Red Hat Enterprise Linux", "IT/OT convergence",
+      "ISO 27001", "Vulnerability management", "VMware", "Nutanix", "Proxmox",
+      "Ansible automation", "Penetration testing", "Firewall management"
+    ]
+  }
+  </script>
 </head>
 <body>
+  <a href="#main" class="skip-link">Skip to content</a>
   <div class="scroll-progress" id="scrollProgress"></div>
   <div class="cursor-glow" id="cursorGlow"></div>
   <canvas id="matrix" aria-hidden="true"></canvas>
@@ -46,6 +83,7 @@
       <li><a href="#skills" class="nav-link">skills</a></li>
       <li><a href="#experience" class="nav-link">experience</a></li>
       <li><a href="#projects" class="nav-link">projects</a></li>
+      <li><a href="#writing" class="nav-link">writing</a></li>
       <li><a href="#certifications" class="nav-link">certifications</a></li>
       <li><a href="#contact" class="nav-link">contact</a></li>
     </ul>
@@ -56,16 +94,17 @@
     <div class="hero-content">
       <p class="hero-greet">$ whoami</p>
       <h1 class="hero-title">Mohamad <span class="accent">Azmi</span></h1>
-      <h2 class="hero-subtitle">
-        <span class="prompt">~$</span> <span id="typed"></span><span class="cursor"></span>
-      </h2>
+      <p class="hero-subtitle">
+        <span class="prompt" aria-hidden="true">~$</span>
+        <span class="sr-only">IT Security Infrastructure Specialist and Linux Engineer</span><span id="typed" aria-hidden="true"></span><span class="cursor" aria-hidden="true"></span>
+      </p>
       <p class="hero-desc">
         IT Security Infrastructure Specialist with <strong>12+ years</strong> of experience in
         server administration, cybersecurity, and IT operations — across logistics and technology.
       </p>
       <div class="hero-actions">
-        <a href="#projects" class="btn btn-primary"><i class="fa-solid fa-code"></i> View Projects</a>
-        <a href="#contact" class="btn btn-outline"><i class="fa-solid fa-terminal"></i> Get in Touch</a>
+        <a href="#projects" class="btn btn-primary"><i class="fa-solid fa-code" aria-hidden="true"></i> View Projects</a>
+        <a href="#contact" class="btn btn-outline"><i class="fa-solid fa-terminal" aria-hidden="true"></i> Get in Touch</a>
       </div>
       <div class="hero-meta">
         <span><i class="fa-solid fa-location-dot"></i> Klang, Selangor, MY</span>
@@ -92,11 +131,12 @@
         </div>
       </div>
     </div>
-    <a href="#about" class="scroll-indicator"><span></span></a>
+    <a href="#about" class="scroll-indicator" aria-label="Scroll to the about section"><span aria-hidden="true"></span></a>
   </header>
 
+  <main id="main">
   <!-- Stats -->
-  <section class="stats">
+  <section class="stats" aria-label="Career statistics">
     <div class="stat" data-count="12" data-suffix="+"><span class="num">0</span><span class="label">Years Experience</span></div>
     <div class="stat" data-count="30" data-suffix="+"><span class="num">0</span><span class="label">Certifications</span></div>
     <div class="stat" data-count="15" data-suffix="+"><span class="num">0</span><span class="label">Technologies</span></div>
@@ -136,16 +176,18 @@
         </div>
         <div class="about-card reveal">
           <div class="about-photo">
-            <img src="assets/images/profile.jpg" alt="Mohamad Azmi" />
+            <img src="assets/images/profile.jpg" alt="Mohamad Azmi" width="110" height="110" decoding="async" />
           </div>
           <h3>Mohamad Azmi Bin Seeni Ameerdeen</h3>
           <p class="about-role">Assistant Manager — IT/OT Infrastructure &amp; Security</p>
           <ul class="about-contact">
-            <li><i class="fa-solid fa-envelope"></i> <span class="obf-email" data-e="moc.liamg@raebnayrz"></span></li>
-            <li><i class="fa-solid fa-location-dot"></i> Klang, Selangor, Malaysia</li>
-            <li><i class="fa-brands fa-linkedin"></i> linkedin.com/in/mohamadazmi</li>
+            <li><i class="fa-solid fa-envelope" aria-hidden="true"></i> <span class="obf-email" data-e="moc.liamg@raebnayrz">hidden from bots</span></li>
+            <li><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Klang, Selangor, Malaysia</li>
+            <li><i class="fa-brands fa-linkedin" aria-hidden="true"></i> linkedin.com/in/mohamadazmi</li>
+            <li><i class="fa-brands fa-github" aria-hidden="true"></i> github.com/azmiameerdeen</li>
           </ul>
-          <a href="https://www.linkedin.com/in/mohamadazmi/" target="_blank" rel="noopener" class="btn btn-primary btn-block"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+          <a href="https://www.linkedin.com/in/mohamadazmi/" target="_blank" rel="noopener" class="btn btn-primary btn-block"><i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn</a>
+          <a href="https://github.com/azmiameerdeen" target="_blank" rel="noopener" class="btn btn-outline btn-block btn-stack"><i class="fa-brands fa-github" aria-hidden="true"></i> GitHub</a>
         </div>
       </div>
     </div>
@@ -275,17 +317,29 @@
         <div class="timeline-item reveal">
           <div class="timeline-dot"></div>
           <div class="timeline-content">
-            <span class="timeline-date">Apr 2024 — Present</span>
+            <span class="timeline-date"><time datetime="2026-07">Jul 2026</time> — Present</span>
             <h3>Assistant Manager — IT/OT Infrastructure &amp; Security</h3>
-            <h4>Westports Malaysia · Pulau Indah, Selangor · <em>promoted from Senior IT Executive (Jul 2026)</em></h4>
+            <h4>Westports Malaysia · Pulau Indah, Selangor</h4>
             <ul>
               <li>Lead IT/OT infrastructure &amp; security operations across physical, virtual and operational-technology estates.</li>
               <li>Oversee ISO 27001 compliance audits, patch management &amp; vulnerability remediation KPIs.</li>
-              <li>Manage VMware, Nutanix, Proxmox &amp; Hyper-V environments and Linux (Ubuntu, Fedora, RedHat, openSUSE) &amp; Windows Server 2016–2025 fleets.</li>
               <li>Secure OT environments and industrial networks, strengthening IT/OT convergence and access controls.</li>
-              <li>Automate patch management &amp; vulnerability remediation; centralize logging, IDS/IPS &amp; firewall config.</li>
               <li>Conduct penetration testing, presenting findings to management.</li>
               <li>Chair infrastructure change reviews as Change Advisory Board (CAB) member.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="timeline-date"><time datetime="2024-04">Apr 2024</time> — <time datetime="2026-07">Jul 2026</time></span>
+            <h3>Senior IT Executive — Infrastructure &amp; Security</h3>
+            <h4>Westports Malaysia · Pulau Indah, Selangor</h4>
+            <ul>
+              <li>Managed VMware, Nutanix, Proxmox &amp; Hyper-V environments and Linux (Ubuntu, Fedora, RedHat, openSUSE) &amp; Windows Server 2016–2025 fleets.</li>
+              <li>Automated patch management &amp; vulnerability remediation; centralized logging, IDS/IPS &amp; firewall configuration.</li>
+              <li>Ran system audits and evidence collection supporting ISO 27001 certification.</li>
+              <li>Promoted to Assistant Manager in Jul 2026.</li>
             </ul>
           </div>
         </div>
@@ -374,6 +428,7 @@
           <div class="project-tag">Automation</div>
           <h3>Automated Patch Management</h3>
           <p>Implemented Ansible-driven patch management, boosting compliance and cutting manual effort.</p>
+          <a class="project-link" href="posts/automated-patch-management.html">Read the writeup <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
         </div>
         <div class="project-card reveal tilt">
           <div class="project-tag">Identity</div>
@@ -414,6 +469,41 @@
     </div>
   </section>
 
+  <!-- Writing -->
+  <section class="section" id="writing">
+    <div class="container">
+      <h2 class="section-title reveal">~/writing<span class="caret">_</span></h2>
+      <p class="section-sub reveal">
+        Field notes from the infrastructure and security work I do day to day — migrations,
+        hardening, and the things that only break in production.
+      </p>
+      <div class="posts-list">
+        <article class="post-card reveal">
+          <a class="post-link" href="posts/automated-patch-management.html">
+            <div class="post-meta">
+              <time datetime="2026-09-08">8 Sep 2026</time>
+              <span class="post-dot" aria-hidden="true">·</span>
+              <span>7 min read</span>
+            </div>
+            <h3>Automating patch management with Ansible, and the GUI I built so it would actually get used</h3>
+            <p>
+              Ansible could always patch a fleet. Making it safe to run at 2am — dry-run discipline,
+              a guard that refuses a second concurrent run, and audit evidence produced as a
+              byproduct rather than assembled by hand — is where the work went.
+            </p>
+            <div class="post-tags">
+              <span>Ansible</span><span>Automation</span><span>Patch Management</span><span>ISO 27001</span>
+            </div>
+            <span class="post-more">Read post <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+          </a>
+        </article>
+      </div>
+      <p class="posts-feed">
+        <a href="feed.xml"><i class="fa-solid fa-rss" aria-hidden="true"></i> RSS feed</a>
+      </p>
+    </div>
+  </section>
+
   <!-- Certifications -->
   <section class="section" id="certifications">
     <div class="container">
@@ -446,12 +536,18 @@
       <div class="contact-wrap reveal">
         <p class="contact-intro">Have a project, role, or infrastructure challenge? Let's talk.</p>
         <div class="contact-links">
-          <a href="#" class="contact-card" data-e="moc.liamg@raebnayrz"><i class="fa-solid fa-envelope"></i><span class="obf-email"></span></a>
-          <a href="https://www.linkedin.com/in/mohamadazmi/" target="_blank" rel="noopener" class="contact-card"><i class="fa-brands fa-linkedin"></i><span>linkedin.com/in/mohamadazmi</span></a>
+          <a class="contact-card" data-e="moc.liamg@raebnayrz" hidden><i class="fa-solid fa-envelope" aria-hidden="true"></i><span class="obf-email"></span></a>
+          <a href="https://www.linkedin.com/in/mohamadazmi/" target="_blank" rel="noopener" class="contact-card"><i class="fa-brands fa-linkedin" aria-hidden="true"></i><span>linkedin.com/in/mohamadazmi</span></a>
+          <a href="https://github.com/azmiameerdeen" target="_blank" rel="noopener" class="contact-card"><i class="fa-brands fa-github" aria-hidden="true"></i><span>github.com/azmiameerdeen</span></a>
         </div>
+        <noscript>
+          <p class="contact-note">My email address is revealed by JavaScript to deter scrapers — reach me on LinkedIn or GitHub instead.</p>
+        </noscript>
       </div>
     </div>
   </section>
+
+  </main>
 
   <footer class="footer">
     <p>$ echo "© 2026 Mohamad Azmi — Built with &lt;3 on Linux"</p>

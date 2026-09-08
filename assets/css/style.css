@@ -631,7 +631,7 @@ body {
 }
 .contact-links {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: 1.5rem;
 }
 .contact-card {
@@ -698,6 +698,7 @@ body {
     right: -100%;
     width: 70%;
     height: 100vh;
+    height: 100dvh;
     background: rgba(10, 15, 26, 0.97);
     backdrop-filter: blur(12px);
     flex-direction: column;
@@ -971,7 +972,288 @@ body {
   box-shadow: 0 0 20px rgba(34, 211, 238, 0.6);
 }
 
-/* Respect reduced motion */
+/* Respect reduced motion — remove the motion, never the content */
 @media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  html { scroll-behavior: auto !important; }
+
+  /* Belt and braces: anything whose visibility depends on motion is forced open. */
+  .hero-content > *,
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .hero-terminal,
+  .terminal { transform: none !important; }
+  .section-title.visible::after { width: 100% !important; }
+
+  /* Purely decorative motion is dropped entirely. */
+  #matrix,
+  .scanlines,
+  .cursor-glow,
+  .scroll-indicator { display: none !important; }
+}
+
+
+/* ============ ACCESSIBILITY ============ */
+
+/* [hidden] must beat the display:flex/grid on the components that use it. */
+[hidden] { display: none !important; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 300;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0 0 8px 8px;
+  background: var(--accent);
+  color: #04121a;
+  font-family: var(--mono);
+  font-weight: 700;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+.skip-link:focus { top: 0; }
+
+/* There was no visible focus indicator anywhere — keyboard users were flying blind. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.btn:focus-visible,
+.contact-card:focus-visible,
+.post-link:focus-visible {
+  outline-offset: 4px;
+}
+
+/* Hamburger folds into an X so its state is visible, not just announced. */
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ============ WRITING ============ */
+
+.section-sub {
+  color: var(--muted);
+  max-width: 62ch;
+  margin: -2rem 0 2.5rem;
+  font-size: 1rem;
+}
+
+.posts-list { display: flex; flex-direction: column; gap: 1.25rem; }
+
+.post-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.post-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+}
+.post-link {
+  display: block;
+  padding: 1.8rem;
+  text-decoration: none;
+  color: inherit;
+}
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--accent-2);
+  margin-bottom: 0.6rem;
+}
+.post-dot { color: var(--muted); }
+.post-card h3 { font-size: 1.2rem; margin-bottom: 0.6rem; line-height: 1.35; }
+.post-card p { color: var(--muted); font-size: 0.94rem; max-width: 70ch; }
+.post-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0 0.9rem; }
+.post-tags span {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 100px;
+  background: rgba(34, 211, 238, 0.1);
+  color: var(--accent);
+}
+.post-more {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.post-card:hover .post-more i { transform: translateX(4px); }
+.post-more i { transition: transform 0.3s; }
+
+/* Project cards had no outbound links at all; this is the first one. */
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 1rem;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+.project-link i { transition: transform 0.3s; }
+.project-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+.project-link:hover i { transform: translateX(4px); }
+
+.posts-feed { margin-top: 1.6rem; font-family: var(--mono); font-size: 0.85rem; }
+.posts-feed a { color: var(--muted); text-decoration: none; }
+.posts-feed a:hover { color: var(--accent); }
+
+.contact-note {
+  margin-top: 1.5rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.btn-stack { margin-top: 0.75rem; }
+
+/* ============ ARTICLE PAGE ============ */
+
+.article-wrap { max-width: 760px; margin: 0 auto; padding: 8rem 5vw 5rem; }
+
+.article-back {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+.article-back:hover { color: var(--accent); }
+
+.article-head { border-bottom: 1px solid var(--border); padding-bottom: 1.8rem; margin-bottom: 2.5rem; }
+.article-head h1 {
+  font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  margin-bottom: 0.9rem;
+}
+
+.article-body { font-size: 1.03rem; line-height: 1.75; }
+.article-body h2 {
+  font-family: var(--mono);
+  font-size: 1.3rem;
+  margin: 2.8rem 0 1rem;
+  color: var(--text);
+  scroll-margin-top: 6rem;
+}
+.article-body h3 { font-size: 1.08rem; margin: 2rem 0 0.7rem; color: var(--accent-2); }
+.article-body p { color: var(--muted); margin-bottom: 1.15rem; }
+.article-body strong { color: var(--text); }
+.article-body a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.article-body ul, .article-body ol { color: var(--muted); margin: 0 0 1.3rem 1.3rem; }
+.article-body li { margin-bottom: 0.5rem; }
+
+.article-body pre {
+  background: #070c16;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.1rem 1.2rem;
+  overflow-x: auto;
+  margin-bottom: 1.4rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.article-body pre code { color: var(--accent-2); font-family: var(--mono); }
+.article-body :not(pre) > code {
+  font-family: var(--mono);
+  font-size: 0.87em;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0.1rem 0.4rem;
+  color: var(--accent);
+  word-break: break-word;
+}
+
+.callout {
+  border-left: 3px solid var(--accent-3);
+  background: rgba(167, 139, 250, 0.07);
+  border-radius: 0 10px 10px 0;
+  padding: 1.1rem 1.3rem;
+  margin: 0 0 1.6rem;
+}
+.callout p { margin-bottom: 0; color: var(--text); font-size: 0.94rem; }
+.callout strong { color: var(--accent-3); }
+
+.article-foot {
+  margin-top: 3.5rem;
+  padding-top: 1.8rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+.article-foot a { color: var(--accent); text-decoration: none; }
+
+@media (max-width: 720px) {
+  .article-wrap { padding-top: 6.5rem; }
+  .section-sub { margin-top: -1.5rem; }
+}
+
+/* ============ PRINT ============ */
+
+/* Not a CV layout — just enough that Ctrl+P doesn't produce black pages.
+   Content gated behind scroll-reveal or the hero animation must be forced
+   open, or anything the reader hadn't scrolled to prints blank. */
+@media print {
+  @page { margin: 14mm; }
+
+  #matrix, .scanlines, .grid-overlay, .cursor-glow, .scroll-progress,
+  .navbar, .back-to-top, .scroll-indicator, .skip-link { display: none !important; }
+
+  .reveal, .hero-content > * { opacity: 1 !important; transform: none !important; }
+
+  html, body { background: #fff !important; color: #111 !important; }
+  .section-alt { background: none !important; }
+  .hero-title, .accent {
+    -webkit-text-fill-color: #111 !important;
+    color: #111 !important;
+    text-shadow: none !important;
+    background: none !important;
+  }
+  h2, h3, h4 { color: #111 !important; page-break-after: avoid; }
+  p, li { color: #222 !important; }
+  .about-card, .skill-card, .timeline-content, .project-card, .cert,
+  .contact-card, .post-card {
+    background: none !important;
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    transform: none !important;
+    page-break-inside: avoid;
+  }
 }
