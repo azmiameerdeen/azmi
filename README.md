@@ -6,17 +6,17 @@ Personal site of **Mohamad Azmi Bin Seeni Ameerdeen**, Assistant Manager – IT/
 
 ## Features
 
-- Dark terminal-themed design with neon cyan/green accents
-- Matrix-style code-rain canvas background, paused when the tab is hidden
-- Animated typewriter role cycling, scroll-reveal, counter animations
-- 3D tilt project cards, floating effects, cursor glow — all skipped on touch
-- Long-form writing section with per-post pages and an RSS feed
-- Responsive — desktop, tablet, mobile, no horizontal overflow at 375px
-- Accessible: skip link, visible focus rings, `main` landmark, AA/AAA colour contrast
-- Degrades without JavaScript and honours `prefers-reduced-motion`
-- Email obfuscated in the markup as a scraper speed bump
-- Content-Security-Policy + Subresource Integrity (SRI) on third-party CSS
-- No frameworks — vanilla HTML, CSS, and JavaScript
+- Charcoal, warm-white and electric-lime editorial design
+- Animated orbital hero illustration with a pause/resume control
+- Featured Ops Workflow case study, capability cards and career timeline
+- Subtle section entrances and hover interactions
+- Shared article design and RSS feed
+- Responsive layouts for desktop, tablet and mobile
+- Skip link, visible keyboard focus, and accessible mobile navigation
+- Content and contact links work without JavaScript
+- Reduced-motion support; animations pause in background tabs
+- Content-Security-Policy and SRI on third-party CSS
+- Vanilla HTML, CSS and JavaScript; no build step
 
 ## Tech Stack
 
@@ -52,16 +52,13 @@ GitHub Pages.
 
 ## Security notes
 
-Two limits are worth stating plainly rather than overselling:
+Hosting limitation:
 
 - **CSP is delivered via `<meta>`.** GitHub Pages cannot set response headers, so the policy is in a
   meta tag. That covers `script-src`, `style-src`, `img-src` and friends, but browsers **ignore
   `frame-ancestors` when it arrives that way** — it has been removed rather than left in as a claim
   that does nothing. Real clickjacking protection needs a host that can send headers
   (Cloudflare Pages `_headers`, Netlify, or an nginx front end).
-- **Email obfuscation is a speed bump, not a control.** The address is stored reversed and assembled
-  in JavaScript, which stops scrapers that do not execute JS and nothing else. The same address is
-  public on LinkedIn.
 
 ## Structure
 
@@ -73,9 +70,9 @@ Two limits are worth stating plainly rather than overselling:
 ├── assets/
 │   ├── css/
 │   │   ├── style.css              # Theme, animations, print fallback
-│   │   └── noscript.css           # Loaded via <noscript>; unhides JS-gated content
+│   │   └── noscript.css           # Navigation fallback when JavaScript is off
 │   ├── js/
-│   │   └── main.js                # Code-rain, typing, scroll UI, reveals, email decode
+│   │   └── main.js                # Navigation, scroll UI, motion controls
 │   └── images/
 │       ├── profile.jpg
 │       └── favicon.svg
