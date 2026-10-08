@@ -461,8 +461,9 @@ a:focus-visible,button:focus-visible {
 .stats {
   display:grid;
   grid-template-columns:1fr 1fr 1fr 1.35fr;
-  background:var(--paper);
-  color:var(--dark);
+  background:var(--panel);
+  color:var(--ink);
+  border-block:1px solid var(--line);
   padding:38px 5vw;
   gap:30px;
 }
@@ -471,7 +472,7 @@ a:focus-visible,button:focus-visible {
   display:flex;
   flex-direction:column;
   justify-content:center;
-  border-right:1px solid #c4c8b9;
+  border-right:1px solid var(--line);
 }
 
 .num {
@@ -482,12 +483,12 @@ a:focus-visible,button:focus-visible {
 }
 
 .num span {
-  color:#5c7042;
+  color:var(--lime);
 }
 
 .label {
   font:10px/1.8 var(--mono);
-  color:#515a46;
+  color:var(--muted);
   margin-top:9px;
 }
 
@@ -505,7 +506,7 @@ a:focus-visible,button:focus-visible {
 
 .stat-link strong span {
   display:inline-block;
-  color:#4f632e;
+  color:var(--lime);
   margin-left:10px;
   transition:transform .2s;
 }
@@ -1451,7 +1452,7 @@ body.page-hidden * {
     border:0;
   }
   .stat:nth-child(3) {
-    border-right:1px solid #c4c8b9;
+    border-right:1px solid var(--line);
   }
   .num {
     font-size:40px;
