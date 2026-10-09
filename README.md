@@ -6,9 +6,9 @@ Personal site of **Mohamad Azmi Bin Seeni Ameerdeen**, Assistant Manager – IT/
 
 ## Features
 
-- Charcoal, warm-white and electric-lime editorial design
-- Animated orbital hero illustration with a pause/resume control
-- Featured Ops Workflow case study, capability cards and career timeline
+- Personal engineering field journal: ink-blue, amber, serif typography and blueprint details
+- Custom SVG topology drawing with infrastructure/security/automation views and pausable packet animation
+- Fixed desktop journal index, work-first layout, Ops Workflow case file and project register
 - Subtle section entrances and hover interactions
 - Shared article design and RSS feed
 - Responsive layouts for desktop, tablet and mobile

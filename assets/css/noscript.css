@@ -1,2 +1,8 @@
-/* Keep the compact navigation accessible when scripting is disabled. */
-@media(max-width:720px){.nav-toggle{display:none}.navbar{position:relative;flex-wrap:wrap}.nav-links{position:static;display:flex;flex-direction:row;flex-wrap:wrap;padding:0;border:0;gap:6px 18px;width:100%}.nav-link{font-size:11px;padding:6px 0}.nav-contact{border:0;margin:0}}
+/* Expand the mobile index without depending on a menu toggle. */
+@media(max-width:850px) {
+  .nav-toggle { display: none; }
+  .navbar { position: relative; height: auto; flex-wrap: wrap; gap: 18px; }
+  .nav-links { position: static; display: flex; flex-wrap: wrap; width: 100%; padding: 0; border: 0; gap: 4px 18px; }
+  .nav-links li { border: 0; }
+  .nav-link { font-size: 10px; padding: 5px 0; gap: 7px; }
+}

@@ -11,6 +11,24 @@
     });
     motion.addEventListener('change', () => { motionButton.hidden = motion.matches; });
   }
+  const topology = document.querySelector('.topology');
+  const switcher = document.querySelector('.map-switcher');
+  const caption = document.getElementById('mapCaption');
+  const captions = {
+    infra: 'Linux, virtualization, cloud and OT. Different environments, one connected practice.',
+    security: 'Identity, access controls and vulnerability remediation. Security runs across every layer.',
+    automation: 'Ansible, repeatable workflows and execution evidence. Less manual work across 121 servers.'
+  };
+  if (topology && switcher && caption) {
+    switcher.hidden = false;
+    switcher.addEventListener('click', event => {
+      const button = event.target.closest('button[data-layer]');
+      if (!button || !captions[button.dataset.layer]) return;
+      topology.dataset.layer = button.dataset.layer;
+      switcher.querySelectorAll('button').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      caption.textContent = captions[button.dataset.layer];
+    });
+  }
   const toggle = document.getElementById('navToggle');
   const menu = document.getElementById('navLinks');
   const closeMenu = () => { menu?.classList.remove('open'); toggle?.setAttribute('aria-expanded', 'false'); };
@@ -21,7 +39,7 @@
   menu?.addEventListener('click', e => { if (e.target.closest('a')) closeMenu(); });
   document.addEventListener('keydown', e => { if(e.key === 'Escape' && menu?.classList.contains('open')) { closeMenu(); toggle.focus(); } });
   document.addEventListener('click', e => { if (!e.target.closest('.navbar')) closeMenu(); });
-  matchMedia('(max-width: 720px)').addEventListener('change', closeMenu);
+  matchMedia('(max-width: 850px)').addEventListener('change', closeMenu);
   const visibility = () => document.body.classList.toggle('page-hidden', document.hidden);
   document.addEventListener('visibilitychange', visibility); visibility();
 

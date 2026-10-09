@@ -23,7 +23,7 @@
   <meta name="twitter:image:alt" content="Portrait of Mohamad Azmi" />
   <meta name="author" content="Mohamad Azmi Bin Seeni Ameerdeen" />
   <meta name="robots" content="index, follow" />
-  <meta name="theme-color" content="#10120f" />
+  <meta name="theme-color" content="#111b24" />
   <link rel="canonical" href="https://azmiameerdeen.github.io/azmi/" />
   <link rel="alternate" type="application/rss+xml" title="Mohamad Azmi — Writing" href="https://azmiameerdeen.github.io/azmi/feed.xml" />
 
@@ -68,41 +68,57 @@
   <div class="scroll-progress" id="scrollProgress"></div>
   <!-- Navigation -->
   <nav class="navbar" id="navbar">
-    <a href="#home" class="nav-logo">azmi<span class="logo-mark">*</span><span class="logo-caption">INFRASTRUCTURE &amp; SECURITY</span></a>
+    <a href="#home" class="nav-logo"><span class="monogram">m<span>/</span>a</span><span class="logo-caption">MOHAMAD AZMI<br>FIELD JOURNAL</span></a>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#about" class="nav-link">About</a></li>
-      <li><a href="#skills" class="nav-link">Expertise</a></li>
-      <li><a href="#projects" class="nav-link">Work</a></li>
-      <li><a href="#writing" class="nav-link">Writing</a></li>
-      <li><a href="#contact" class="nav-link nav-contact">Let’s talk <span aria-hidden="true">↗</span></a></li>
+      <li><a href="#projects" class="nav-link"><span>01</span> Selected work</a></li>
+      <li><a href="#writing" class="nav-link"><span>02</span> Field notes</a></li>
+      <li><a href="#skills" class="nav-link"><span>03</span> Toolkit</a></li>
+      <li><a href="#about" class="nav-link"><span>04</span> The engineer</a></li>
+      <li><a href="#experience" class="nav-link"><span>05</span> Experience</a></li>
+      <li><a href="#contact" class="nav-link nav-contact"><span>↗</span> Get in touch</a></li>
     </ul>
+    <div class="rail-note"><span class="rail-cross" aria-hidden="true">+</span><p>BASED IN KLANG, MY<br>INFRASTRUCTURE / SECURITY<br>EST. IN THE FIELD — 2014</p><a href="https://github.com/azmiameerdeen" target="_blank" rel="noopener">GITHUB ↗</a></div>
   </nav>
 
-  <!-- Hero -->
+  <!-- A personal engineering journal, illustrated with a conceptual topology. -->
   <header class="hero" id="home">
+    <div class="journal-masthead"><span>PERSONAL PORTFOLIO / ENGINEERING NOTES</span><span>IT + OT / MALAYSIA</span></div>
     <div class="hero-content">
-      <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> MOHAMAD AZMI / KLANG, MALAYSIA</p>
-      <h1>Behind every<br>reliable system.<br><span class="hero-outline">A human.</span></h1>
-      <p class="hero-desc">I’m Azmi. I build, secure, and automate the infrastructure that keeps businesses moving.</p>
-      <p class="hero-role">Assistant Manager · IT/OT Infrastructure &amp; Security</p>
-      <div class="hero-actions">
-        <a href="#projects" class="btn btn-primary">Explore my work <span aria-hidden="true">↗</span></a>
-        <a href="#about" class="btn btn-outline">Meet the engineer <span aria-hidden="true">↓</span></a>
-      </div>
+      <p class="eyebrow"><span class="index-square" aria-hidden="true"></span> THE ENGINEER’S FIELD JOURNAL</p>
+      <h1>Mohamad<br><em>Azmi<span>.</span></em></h1>
+      <p class="hero-role">Infrastructure engineer.<br>Security practitioner. Builder.</p>
+      <p class="hero-desc">From the Linux shell to the port’s operational systems. Twelve years of making infrastructure work — and keeping it secure.</p>
+      <a href="#projects" class="hero-entry">Open the work log <span aria-hidden="true">↘</span></a>
     </div>
-    <div class="core-scene" aria-label="Illustration of connected infrastructure, security, and automation">
-      <div class="scene-top"><div class="scene-label"><span class="status-dot" aria-hidden="true"></span> THE INFRASTRUCTURE LAYER</div><button class="motion-toggle" id="motionToggle" type="button" aria-pressed="false" hidden>Pause motion</button></div>
-      <div class="orbital" aria-hidden="true">
-        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div>
-        <div class="core"><span>MA<span class="core-star">*</span></span><small>ENGINEERED TO CONNECT</small></div>
-        <div class="orbit-node node-linux">01 / LINUX</div><div class="orbit-node node-security">02 / SECURITY</div><div class="orbit-node node-auto">03 / AUTOMATION</div>
+    <div class="topology" data-layer="infra">
+      <div class="drawing-top"><span>FIG. 01 / CONNECTED SYSTEMS</span><button class="motion-toggle" id="motionToggle" type="button" aria-pressed="false" hidden>Pause motion</button></div>
+      <svg class="system-map" viewBox="0 0 560 390" role="img" aria-labelledby="mapTitle mapDesc">
+        <title id="mapTitle">An illustration of my infrastructure, security and automation work</title>
+        <desc id="mapDesc">A control node connects to Linux, virtual machines, cloud and OT networks. This is a conceptual diagram, not a live system monitor.</desc>
+        <defs><pattern id="blueprintGrid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" fill="none" stroke="#304454" stroke-width=".6"/></pattern></defs>
+        <rect width="560" height="390" fill="url(#blueprintGrid)"/>
+        <g class="map-route" fill="none" stroke-width="1.5"><path d="M280 160V79H108V123M280 79H452V123M280 214V290H108V259M280 290H452V259"/><path class="packet" d="M280 160V79H108V123M280 79H452V123M280 214V290H108V259M280 290H452V259"/></g>
+        <g class="map-boundary"><rect x="40" y="47" width="480" height="284" rx="5"/><text x="53" y="345">TRUST BOUNDARY / IDENTITY + ACCESS</text></g>
+        <g class="map-node" transform="translate(53 123)"><path d="M0 0H110V53H0ZM8 17H102M8 35H102"/><circle cx="94" cy="9" r="2"/><circle cx="94" cy="26" r="2"/><circle cx="94" cy="44" r="2"/><text x="0" y="72">01 / LINUX &amp; UNIX</text></g>
+        <g class="map-node" transform="translate(397 123)"><path d="M0 0H110V53H0ZM10 10H46V43H10ZM57 10H100V43H57"/><text x="0" y="72">02 / VIRTUALIZATION</text></g>
+        <g class="map-node" transform="translate(53 226)"><path d="M0 0H110V33H0ZM10 10H100M10 22H75"/><text x="0" y="55">03 / CLOUD</text></g>
+        <g class="map-node" transform="translate(397 226)"><path d="M0 0H110V33H0ZM10 23V10H25V23H40V10H55V23H70V10H85V23H100"/><text x="0" y="55">04 / OT NETWORKS</text></g>
+        <g class="map-control" transform="translate(211 151)"><rect width="138" height="70"/><text x="69" y="29" text-anchor="middle">CONTROL NODE</text><text class="map-small" x="69" y="48" text-anchor="middle">CONFIGURE / PROTECT</text></g>
+        <g class="map-cross" stroke="#7592a5"><path d="M8 12H20M14 6V18M540 12H552M546 6V18M8 376H20M14 370V382M540 376H552M546 370V382"/></g>
+        <text class="map-scale" x="425" y="373">CONCEPTUAL / N.T.S.</text>
+      </svg>
+      <div class="map-switcher" role="group" aria-label="Explore my areas of work" hidden>
+        <button type="button" data-layer="infra" aria-pressed="true">01 Infrastructure</button>
+        <button type="button" data-layer="security" aria-pressed="false">02 Security</button>
+        <button type="button" data-layer="automation" aria-pressed="false">03 Automation</button>
       </div>
-      <div class="scene-bottom"><span>PEOPLE. SYSTEMS. POSSIBILITY.</span><span aria-hidden="true">[ ↗ ]</span></div>
+      <p class="map-caption" id="mapCaption" aria-live="polite">Linux, virtualization, cloud and OT. Different environments, one connected practice.</p>
+      <div class="drawing-signature"><span>DRAWN FROM PRACTICE</span><span class="signature">M. Azmi</span></div>
     </div>
-    <div class="hero-bottom"><span>12+ YEARS OF HANDS-ON EXPERIENCE</span><a href="#projects">SCROLL TO EXPLORE <span aria-hidden="true">↓</span></a><span>IT × OT</span></div>
+    <div class="hero-bottom"><span>ASSISTANT MANAGER<br><b>IT/OT INFRASTRUCTURE &amp; SECURITY</b></span><span>WESTPORTS MALAYSIA<br><b>PULAU INDAH, SELANGOR</b></span><a href="#writing">READ MY LATEST FIELD NOTE <span aria-hidden="true">↗</span></a></div>
   </header>
 
   <main id="main">
@@ -113,60 +129,101 @@
     <a class="stat stat-link" href="posts/automated-patch-management.html"><span class="label">LATEST FIELD NOTE</span><strong>Automated patch management <span aria-hidden="true">↗</span></strong></a>
   </section>
 
-  <!-- About -->
-  <section class="section" id="about">
+  <!-- Projects -->
+  <section class="section section-alt" id="projects">
     <div class="container">
-      <div class="section-heading reveal"><p class="eyebrow">01 / ABOUT</p><h2 class="section-title">The person behind the systems.</h2></div>
-      <div class="about-grid">
-        <div class="about-text reveal">
-          <p>
-            Seasoned IT Security Infrastructure Specialist with over <strong>12 years</strong> of
-            experience in server administration, cybersecurity, and IT operations across the
-            logistics and technology sectors.
-          </p>
-          <p>
-            Highly skilled in managing <strong>Linux</strong> and <strong>Windows</strong> servers,
-            virtualization platforms (<strong>VMware, Nutanix, Hyper-V, Proxmox</strong>), and cloud
-            environments (<strong>Azure, AWS, Alibaba Cloud</strong>).
-          </p>
-          <p>
-            Currently serving as <strong>Assistant Manager — IT/OT Infrastructure &amp; Security</strong>
-            at <strong>Westports Malaysia</strong>, overseeing physical and virtual server infrastructure,
-            leading system audits for <strong>ISO 27001</strong> compliance, and driving patch management
-            to reduce vulnerabilities. Active member of the
-            <strong>Change Advisory Board (CAB)</strong> — reviewing infrastructure changes for risk,
-            impact, rollback readiness, and compliance.
-          </p>
-          <ul class="about-points">
-            <li><i class="fa-solid fa-check" aria-hidden="true"></i> System hardening &amp; security posture</li>
-            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Automated patch management (Ansible)</li>
-            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Penetration testing &amp; vulnerability remediation</li>
-            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Centralized logging, IDS &amp; firewall config</li>
-          </ul>
+      <div class="section-heading reveal"><p class="eyebrow">01 / PROJECTS</p><h2 class="section-title">The work log.</h2></div>
+      <a class="featured-project reveal" href="posts/automated-patch-management.html">
+        <div class="project-spine"><span>CASE FILE / 001</span><span>SELF-BUILT · PRIVATELY MAINTAINED</span></div>
+        <div class="feature-copy"><p class="eyebrow">AUTOMATION / PATCH MANAGEMENT</p><h3>Ops Workflow<span>From playbook<br>to proof.</span></h3><p>A self-hosted Ansible GUI I built and maintain for patching 121 servers. Scheduled jobs, execution controls, and the evidence that the work got done.</p><div class="feature-tags"><span>Ansible</span><span>FastAPI</span><span>Docker</span></div><span class="feature-cta">Read the engineering note <span aria-hidden="true">↗</span></span></div>
+        <div class="run-sheet" aria-hidden="true"><div class="run-sheet-head"><span>WORKFLOW / REFERENCE</span><span>↙</span></div><ol><li><span>01</span><div>Prepare<small>Playbooks + inventory</small></div></li><li><span>02</span><div>Validate<small>Lint → syntax → dry run</small></div></li><li><span>03</span><div>Execute<small>Schedule + concurrency guard</small></div></li><li><span>04</span><div>Review<small>Logs, reports + notifications</small></div></li></ol><div class="run-sheet-foot"><strong>121</strong><span>SERVERS IN<br>PATCH AUTOMATION</span></div></div>
+      </a>
+      <p class="eyebrow archive-label">PROJECT REGISTER / SELECTED ENGAGEMENTS</p>
+      <div class="projects-grid">
+        <div class="project-card reveal">
+          <div class="project-tag">Migration</div>
+          <h3>RHEL 7 → RHEL 8 Migration</h3>
+          <p>Led in-place &amp; fresh migration of TOS production servers ensuring stability and minimal downtime.</p>
         </div>
-        <div class="about-card reveal">
-          <div class="about-photo">
-            <img src="assets/images/profile.jpg" alt="Mohamad Azmi" width="110" height="110" decoding="async" />
-          </div>
-          <h3>Mohamad Azmi Bin Seeni Ameerdeen</h3>
-          <p class="about-role">Assistant Manager — IT/OT Infrastructure &amp; Security</p>
-          <ul class="about-contact">
-            <li><i class="fa-solid fa-envelope" aria-hidden="true"></i> <a href="mailto:zryanbear@gmail.com">zryanbear@gmail.com</a></li>
-            <li><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Klang, Selangor, Malaysia</li>
-            <li><i class="fa-brands fa-linkedin" aria-hidden="true"></i> linkedin.com/in/mohamadazmi</li>
-            <li><i class="fa-brands fa-github" aria-hidden="true"></i> github.com/azmiameerdeen</li>
-          </ul>
-          <a href="https://www.linkedin.com/in/mohamadazmi/" target="_blank" rel="noopener" class="btn btn-primary btn-block"><i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn</a>
-          <a href="https://github.com/azmiameerdeen" target="_blank" rel="noopener" class="btn btn-outline btn-block btn-stack"><i class="fa-brands fa-github" aria-hidden="true"></i> GitHub</a>
+
+        <div class="project-card reveal">
+          <div class="project-tag">Identity</div>
+          <h3>IdM &amp; Foreman</h3>
+          <p>Upgraded FreeIPA Replica &amp; Foreman to enhance centralized auth and lifecycle management.</p>
+        </div>
+        <div class="project-card reveal">
+          <div class="project-tag">Network Security</div>
+          <h3>FortiGate Firewall Migration</h3>
+          <p>Enterprise firewall migration with policy mapping, risk analysis &amp; controlled cutover.</p>
+        </div>
+        <div class="project-card reveal">
+          <div class="project-tag">SIEM / SOC</div>
+          <h3>SOC-as-a-Service &amp; SIEM</h3>
+          <p>Supported log onboarding, event monitoring, incident triage and alert tuning.</p>
+        </div>
+        <div class="project-card reveal">
+          <div class="project-tag">Load Balancing</div>
+          <h3>FortiADC L4/L7 Load Balancing</h3>
+          <p>Configured health checks, SSL offloading and high-availability architecture.</p>
+        </div>
+        <div class="project-card reveal">
+          <div class="project-tag">Endpoint</div>
+          <h3>Trend Micro Vision One / Bitdefender GravityZone</h3>
+          <p>Enforced enterprise-wide endpoint security policies.</p>
+        </div>
+        <div class="project-card reveal">
+          <div class="project-tag">Infrastructure</div>
+          <h3>ManageEngine Deployment</h3>
+          <p>Deployed ServiceDesk, OpManager, OpCentral, Application Manager &amp; Endpoint Central.</p>
+        </div>
+        <div class="project-card reveal">
+          <div class="project-tag">Hardening</div>
+          <h3>CCTV &amp; App Server Hardening</h3>
+          <p>Deployed and hardened CCTV media servers and critical application servers in production.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Writing -->
+  <section class="section" id="writing">
+    <div class="container">
+      <div class="section-heading reveal"><p class="eyebrow">02 / WRITING</p><h2 class="section-title">Documented in the field.</h2></div>
+      <p class="section-sub reveal">
+        Field notes from the infrastructure and security work I do day to day — migrations,
+        hardening, and the things that only break in production.
+      </p>
+      <div class="posts-list">
+        <article class="post-card reveal">
+          <a class="post-link" href="posts/automated-patch-management.html">
+            <div class="post-meta">
+              <time datetime="2026-09-08">8 Sep 2026</time>
+              <span class="post-dot" aria-hidden="true">·</span>
+              <span>7 min read</span>
+            </div>
+            <h3>Automating patch management with Ansible, and the GUI I built so it would actually get used</h3>
+            <p>
+              Ansible could always patch a fleet. Making it safe to run at 2am — dry-run discipline,
+              a guard that refuses a second concurrent run, and audit evidence produced as a
+              byproduct rather than assembled by hand — is where the work went.
+            </p>
+            <div class="post-tags">
+              <span>Ansible</span><span>Automation</span><span>Patch Management</span><span>ISO 27001</span>
+            </div>
+            <span class="post-more">Read post <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+          </a>
+        </article>
+      </div>
+      <p class="posts-feed">
+        <a href="feed.xml"><i class="fa-solid fa-rss" aria-hidden="true"></i> RSS feed</a>
+      </p>
     </div>
   </section>
 
   <!-- Skills -->
   <section class="section section-alt" id="skills">
     <div class="container">
-      <div class="section-heading reveal"><p class="eyebrow">02 / SKILLS</p><h2 class="section-title">Deep roots. Broad capability.</h2></div>
+      <div class="section-heading reveal"><p class="eyebrow">03 / SKILLS</p><h2 class="section-title">Tools of the trade.</h2></div>
       <div class="skills-grid">
         <div class="skill-card reveal">
           <div class="skill-icon"><i class="fa-brands fa-linux" aria-hidden="true"></i></div>
@@ -317,10 +374,60 @@
     </div>
   </section>
 
+  <!-- About -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="section-heading reveal"><p class="eyebrow">04 / ABOUT</p><h2 class="section-title">The person on the other end.</h2></div>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>
+            Seasoned IT Security Infrastructure Specialist with over <strong>12 years</strong> of
+            experience in server administration, cybersecurity, and IT operations across the
+            logistics and technology sectors.
+          </p>
+          <p>
+            Highly skilled in managing <strong>Linux</strong> and <strong>Windows</strong> servers,
+            virtualization platforms (<strong>VMware, Nutanix, Hyper-V, Proxmox</strong>), and cloud
+            environments (<strong>Azure, AWS, Alibaba Cloud</strong>).
+          </p>
+          <p>
+            Currently serving as <strong>Assistant Manager — IT/OT Infrastructure &amp; Security</strong>
+            at <strong>Westports Malaysia</strong>, overseeing physical and virtual server infrastructure,
+            leading system audits for <strong>ISO 27001</strong> compliance, and driving patch management
+            to reduce vulnerabilities. Active member of the
+            <strong>Change Advisory Board (CAB)</strong> — reviewing infrastructure changes for risk,
+            impact, rollback readiness, and compliance.
+          </p>
+          <ul class="about-points">
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> System hardening &amp; security posture</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Automated patch management (Ansible)</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Penetration testing &amp; vulnerability remediation</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Centralized logging, IDS &amp; firewall config</li>
+          </ul>
+        </div>
+        <div class="about-card reveal">
+          <div class="about-photo">
+            <img src="assets/images/profile.jpg" alt="Mohamad Azmi" width="110" height="110" decoding="async" />
+          </div>
+          <h3>Mohamad Azmi Bin Seeni Ameerdeen</h3>
+          <p class="about-role">Assistant Manager — IT/OT Infrastructure &amp; Security</p>
+          <ul class="about-contact">
+            <li><i class="fa-solid fa-envelope" aria-hidden="true"></i> <a href="mailto:zryanbear@gmail.com">zryanbear@gmail.com</a></li>
+            <li><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Klang, Selangor, Malaysia</li>
+            <li><i class="fa-brands fa-linkedin" aria-hidden="true"></i> linkedin.com/in/mohamadazmi</li>
+            <li><i class="fa-brands fa-github" aria-hidden="true"></i> github.com/azmiameerdeen</li>
+          </ul>
+          <a href="https://www.linkedin.com/in/mohamadazmi/" target="_blank" rel="noopener" class="btn btn-primary btn-block"><i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn</a>
+          <a href="https://github.com/azmiameerdeen" target="_blank" rel="noopener" class="btn btn-outline btn-block btn-stack"><i class="fa-brands fa-github" aria-hidden="true"></i> GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Experience -->
   <section class="section" id="experience">
     <div class="container">
-      <div class="section-heading reveal"><p class="eyebrow">03 / EXPERIENCE</p><h2 class="section-title">Built on experience.</h2></div>
+      <div class="section-heading reveal"><p class="eyebrow">05 / EXPERIENCE</p><h2 class="section-title">A career, in versions.</h2></div>
       <div class="timeline">
         <div class="timeline-item reveal">
           <div class="timeline-dot"></div>
@@ -422,100 +529,10 @@
     </div>
   </section>
 
-  <!-- Projects -->
-  <section class="section section-alt" id="projects">
-    <div class="container">
-      <div class="section-heading reveal"><p class="eyebrow">04 / PROJECTS</p><h2 class="section-title">Work that makes a difference.</h2></div>
-      <a class="featured-project reveal" href="posts/automated-patch-management.html">
-        <div class="feature-copy"><p class="eyebrow">FEATURED / AUTOMATION</p><h3>Less manual work.<br>More control.</h3><p>Ops Workflow. My self-hosted Ansible GUI for patching 121 servers, meeting remediation KPIs, and reducing vulnerabilities.</p><div class="feature-tags"><span>Ansible</span><span>FastAPI</span><span>Docker</span></div><span class="feature-cta">Inside the project <span aria-hidden="true">↗</span></span></div>
-        <div class="workflow-art" aria-hidden="true"><div class="workflow-bar"><span>OPS WORKFLOW</span><span>ARCHITECTURE</span></div><div class="workflow-number">121<span>SERVERS</span></div><div class="workflow-path"><span>VALIDATE</span><b>→</b><span>PATCH</span><b>→</b><span>REPORT</span></div><div class="workflow-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>One workflow. From playbook to evidence.</p></div>
-      </a>
-      <p class="eyebrow archive-label">MORE FROM THE TOOLBOX</p>
-      <div class="projects-grid">
-        <div class="project-card reveal">
-          <div class="project-tag">Migration</div>
-          <h3>RHEL 7 → RHEL 8 Migration</h3>
-          <p>Led in-place &amp; fresh migration of TOS production servers ensuring stability and minimal downtime.</p>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="project-tag">Identity</div>
-          <h3>IdM &amp; Foreman</h3>
-          <p>Upgraded FreeIPA Replica &amp; Foreman to enhance centralized auth and lifecycle management.</p>
-        </div>
-        <div class="project-card reveal">
-          <div class="project-tag">Network Security</div>
-          <h3>FortiGate Firewall Migration</h3>
-          <p>Enterprise firewall migration with policy mapping, risk analysis &amp; controlled cutover.</p>
-        </div>
-        <div class="project-card reveal">
-          <div class="project-tag">SIEM / SOC</div>
-          <h3>SOC-as-a-Service &amp; SIEM</h3>
-          <p>Supported log onboarding, event monitoring, incident triage and alert tuning.</p>
-        </div>
-        <div class="project-card reveal">
-          <div class="project-tag">Load Balancing</div>
-          <h3>FortiADC L4/L7 Load Balancing</h3>
-          <p>Configured health checks, SSL offloading and high-availability architecture.</p>
-        </div>
-        <div class="project-card reveal">
-          <div class="project-tag">Endpoint</div>
-          <h3>Trend Micro Vision One / Bitdefender GravityZone</h3>
-          <p>Enforced enterprise-wide endpoint security policies.</p>
-        </div>
-        <div class="project-card reveal">
-          <div class="project-tag">Infrastructure</div>
-          <h3>ManageEngine Deployment</h3>
-          <p>Deployed ServiceDesk, OpManager, OpCentral, Application Manager &amp; Endpoint Central.</p>
-        </div>
-        <div class="project-card reveal">
-          <div class="project-tag">Hardening</div>
-          <h3>CCTV &amp; App Server Hardening</h3>
-          <p>Deployed and hardened CCTV media servers and critical application servers in production.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Writing -->
-  <section class="section" id="writing">
-    <div class="container">
-      <div class="section-heading reveal"><p class="eyebrow">05 / WRITING</p><h2 class="section-title">Notes from the field.</h2></div>
-      <p class="section-sub reveal">
-        Field notes from the infrastructure and security work I do day to day — migrations,
-        hardening, and the things that only break in production.
-      </p>
-      <div class="posts-list">
-        <article class="post-card reveal">
-          <a class="post-link" href="posts/automated-patch-management.html">
-            <div class="post-meta">
-              <time datetime="2026-09-08">8 Sep 2026</time>
-              <span class="post-dot" aria-hidden="true">·</span>
-              <span>7 min read</span>
-            </div>
-            <h3>Automating patch management with Ansible, and the GUI I built so it would actually get used</h3>
-            <p>
-              Ansible could always patch a fleet. Making it safe to run at 2am — dry-run discipline,
-              a guard that refuses a second concurrent run, and audit evidence produced as a
-              byproduct rather than assembled by hand — is where the work went.
-            </p>
-            <div class="post-tags">
-              <span>Ansible</span><span>Automation</span><span>Patch Management</span><span>ISO 27001</span>
-            </div>
-            <span class="post-more">Read post <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
-          </a>
-        </article>
-      </div>
-      <p class="posts-feed">
-        <a href="feed.xml"><i class="fa-solid fa-rss" aria-hidden="true"></i> RSS feed</a>
-      </p>
-    </div>
-  </section>
-
   <!-- Certifications -->
   <section class="section" id="certifications">
     <div class="container">
-      <div class="section-heading reveal"><p class="eyebrow">06 / CERTIFICATIONS</p><h2 class="section-title">Always learning.</h2></div>
+      <div class="section-heading reveal"><p class="eyebrow">06 / CERTIFICATIONS</p><h2 class="section-title">Learning is part of the work.</h2></div>
       <div class="certs-grid">
         <div class="cert reveal"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i><span>CompTIA Security+</span></div>
         <div class="cert reveal"><i class="fa-solid fa-user-shield" aria-hidden="true"></i><span>Certified Cybersecurity Educator (CCEP)</span></div>
@@ -540,7 +557,7 @@
   <!-- Contact -->
   <section class="section section-alt" id="contact">
     <div class="container">
-      <div class="section-heading reveal"><p class="eyebrow">07 / CONTACT</p><h2 class="section-title">Let’s build something resilient.</h2></div>
+      <div class="section-heading reveal"><p class="eyebrow">07 / CONTACT</p><h2 class="section-title">What are you working on?</h2></div>
       <div class="contact-wrap reveal">
         <p class="contact-intro">A complex infrastructure challenge. An ambitious project. A conversation worth having.</p>
         <div class="contact-links">
@@ -555,7 +572,7 @@
 
   </main>
 
-  <footer class="footer"><a href="#home" class="footer-brand">azmi<span>*</span></a><p>Infrastructure with intention.<br>© 2026 Mohamad Azmi</p><a href="#home">BACK TO TOP ↗</a></footer>
+  <footer class="footer"><a href="#home" class="footer-brand">m/a<span>ENGINEERING FIELD JOURNAL</span></a><p>Mohamad Azmi · Klang, Malaysia<br>© 2026 · Made with care, maintained by hand.</p><a href="#home">RETURN TO THE TOP ↑</a></footer>
 
   <button class="back-to-top" id="backToTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button>
 
