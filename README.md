@@ -6,17 +6,20 @@ Personal site of **Mohamad Azmi Bin Seeni Ameerdeen**, Assistant Manager – IT/
 
 ## Features
 
-- Personal engineering field journal: ink-blue, amber, serif typography and blueprint details
-- Custom SVG topology drawing with infrastructure/security/automation views and pausable packet animation
-- Fixed desktop journal index, work-first layout, Ops Workflow case file and project register
-- Subtle section entrances and hover interactions
-- Shared article design and RSS feed
-- Responsive layouts for desktop, tablet and mobile
-- Skip link, visible keyboard focus, and accessible mobile navigation
-- Content and contact links work without JavaScript
-- Reduced-motion support; animations pause in background tabs
-- Content-Security-Policy and SRI on third-party CSS
-- Vanilla HTML, CSS and JavaScript; no build step
+- **Executive Cyber-Defense Design:** Deep obsidian dark mode with electric cyan, emerald, and amber telemetry accents
+- **Interactive Cyber Constellation:** Hardware-accelerated canvas particle lattice that subtly reacts to cursor proximity
+- **Interactive Hero Mission Control:** Dynamic SVG topology diagram of Westports IT/OT architecture with live layer switching (Infrastructure, Cybersecurity, Automation) and packet flow animations
+- **Interactive Mini-Terminal:** Integrated terminal drawer with instant command execution (`cat specs.json`, `uptime`, `ansible --check`, `whoami`, `cab --status`)
+- **Animated Metrics Counters:** Scroll-triggered counting statistics for years of experience, automated nodes, credentials, and uptime
+- **Ops Workflow Flagship Case Study:** Interactive 4-stage pipeline showcase with execution gating metrics
+- **Interactive Project Filtering:** Category filter tabs for migration, network security, identity, and SIEM engagements
+- **Real-Time Skill Search & Chip Cloud:** Live-filtering search bar across 50+ enterprise technology chips
+- **Live Local Time Widget:** Malaysian timezone clock (`Asia/Kuala_Lumpur`) in executive personnel dossier
+- **1-Click Copy with Toast Notification:** Seamless clipboard copying for contact channels with interactive feedback
+- **Card Spotlight Tracking:** Dynamic `--mouse-x` and `--mouse-y` lighting gradients that follow cursor movement
+- **Mobile Responsive Drawer:** Smooth frosted-glass navigation drawer with keyboard escape and outside-click support
+- **Accessibility & Security First:** Full `prefers-reduced-motion` compliance, strict Content-Security-Policy (CSP), Schema.org Person JSON-LD, and noscript fallbacks
+- **Vanilla Architecture:** Zero build tools or heavy framework dependencies; pure HTML5, modern CSS3, and vanilla JavaScript
 
 ## Tech Stack
 

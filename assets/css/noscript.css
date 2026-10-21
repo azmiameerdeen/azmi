@@ -1,8 +1,56 @@
-/* Expand the mobile index without depending on a menu toggle. */
-@media(max-width:850px) {
-  .nav-toggle { display: none; }
-  .navbar { position: relative; height: auto; flex-wrap: wrap; gap: 18px; }
-  .nav-links { position: static; display: flex; flex-wrap: wrap; width: 100%; padding: 0; border: 0; gap: 4px 18px; }
-  .nav-links li { border: 0; }
-  .nav-link { font-size: 10px; padding: 5px 0; gap: 7px; }
+/* Fallback for when JavaScript is disabled */
+.reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+#bgCanvas {
+  display: none !important;
+}
+
+.typewriter-cursor {
+  display: none !important;
+}
+
+.typewriter-text::after {
+  content: 'Linux Systems Engineering & IT/OT Security';
+}
+
+.metric-value[data-target]::before {
+  content: attr(data-target);
+}
+
+.metric-value[data-target] {
+  font-size: clamp(34px, 3vw, 42px);
+}
+
+.project-card {
+  display: flex !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+@media (max-width: 850px) {
+  .nav-toggle {
+    display: none !important;
+  }
+  .navbar {
+    height: auto !important;
+    position: relative !important;
+    padding: 16px 0 !important;
+  }
+  .nav-container {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .nav-menu {
+    position: static !important;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
 }
