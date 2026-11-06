@@ -1,36 +1,38 @@
 # Mohamad Azmi — Portfolio & Writing
 
-Personal site of **Mohamad Azmi Bin Seeni Ameerdeen**, Assistant Manager – IT/OT Infrastructure & Security, with 12+ years in Linux, virtualization, cloud, and cybersecurity.
+Personal site of **Mohamad Azmi Bin Seeni Ameerdeen**, Assistant Manager – IT/OT Infrastructure & Security at Westports Malaysia, with 12+ years in Linux engineering, virtualization, firewalls, Ansible automation and ISO 27001.
 
 **[Live → azmiameerdeen.github.io/azmi](https://azmiameerdeen.github.io/azmi/)**
 
-## Features
+## Design
 
-- **Executive Cyber-Defense Design:** Deep obsidian dark mode with electric cyan, emerald, and amber telemetry accents
-- **Interactive Cyber Constellation:** Hardware-accelerated canvas particle lattice that subtly reacts to cursor proximity
-- **Interactive Hero Mission Control:** Dynamic SVG topology diagram of Westports IT/OT architecture with live layer switching (Infrastructure, Cybersecurity, Automation) and packet flow animations
-- **Interactive Mini-Terminal:** Integrated terminal drawer with instant command execution (`cat specs.json`, `uptime`, `ansible --check`, `whoami`, `cab --status`)
-- **Animated Metrics Counters:** Scroll-triggered counting statistics for years of experience, automated nodes, credentials, and uptime
-- **Ops Workflow Flagship Case Study:** Interactive 4-stage pipeline showcase with execution gating metrics
-- **Interactive Project Filtering:** Category filter tabs for migration, network security, identity, and SIEM engagements
-- **Real-Time Skill Search & Chip Cloud:** Live-filtering search bar across 50+ enterprise technology chips
-- **Live Local Time Widget:** Malaysian timezone clock (`Asia/Kuala_Lumpur`) in executive personnel dossier
-- **1-Click Copy with Toast Notification:** Seamless clipboard copying for contact channels with interactive feedback
-- **Card Spotlight Tracking:** Dynamic `--mouse-x` and `--mouse-y` lighting gradients that follow cursor movement
-- **Mobile Responsive Drawer:** Smooth frosted-glass navigation drawer with keyboard escape and outside-click support
-- **Accessibility & Security First:** Full `prefers-reduced-motion` compliance, strict Content-Security-Policy (CSP), Schema.org Person JSON-LD, and noscript fallbacks
-- **Vanilla Architecture:** Zero build tools or heavy framework dependencies; pure HTML5, modern CSS3, and vanilla JavaScript
+Dark, editorial and three-dimensional — large display type with serif-italic accents, a teal → indigo → violet aurora that drifts as you scroll, and depth wherever it carries meaning.
 
-## Tech Stack
+- **Fleet globe (hero)** — 121 nodes on a sphere, one per server under automated patching. Patch waves roll through it 20% at a time (`serial: 20%`), with packets travelling the lattice. Drag to rotate. It is an illustration, and its caption says so — not live data.
+- **Isometric pipeline** — the Ops Workflow card shows the real run order (lint → dry run → concurrency guard → run & evidence) as a floating 3D stack that spreads apart on hover.
+- **Pinned 3D gallery** — on wide screens the projects flow sideways as you scroll, curving like a coverflow. On phones it becomes a swipeable row.
+- **Flow** — headings rise in word by word, the experience timeline draws itself as you scroll, the nav tucks away on the way down, and tech names drift in marquee rows.
+- **Tilt & glare** — cards respond to the pointer with perspective tilt and a light sheen; the portrait's floating chips sit at different depths.
+
+## Engineering notes
+
+- **No frameworks, no build step, no trackers.** Vanilla HTML, CSS and JavaScript.
+- **No third-party scripts or icon fonts.** Icons are an inline SVG sprite; the only external requests are Google Fonts.
+- **Strict CSP.** `script-src 'self'`, no inline scripts or `style` attributes. JavaScript writes CSS custom properties through the CSSOM, which the policy allows.
+- **Works without JavaScript.** `assets/js/boot.js` adds a `js` class in `<head>`; every hidden-until-revealed style is gated behind it, so without JS the page renders fully visible. `noscript.css` only tidies the canvas and mobile nav.
+- **Honours `prefers-reduced-motion`.** Durations *and* delays collapse, the globe becomes a still frame, the gallery stops pinning and the marquee stops scrolling — content is never hidden.
+- **Cheap to run.** One shared rAF-batched scroll listener; the globe pauses when off-screen or in a background tab.
+
+## Tech stack
 
 | Layer | Detail |
 |---|---|
-| Frontend | HTML5, CSS3, JavaScript (vanilla) |
-| Fonts | Google Fonts (JetBrains Mono + Inter), Font Awesome 6.5 |
+| Frontend | HTML5, CSS (3D transforms, custom properties), vanilla JavaScript, Canvas 2D |
+| Fonts | Geist, Geist Mono, Instrument Serif (Google Fonts) |
 | Hosting | GitHub Pages |
 | CI/CD | GitHub Actions (static deploy) |
 
-## Local Development
+## Local development
 
 ```bash
 git clone https://github.com/azmiameerdeen/azmi.git
@@ -45,49 +47,34 @@ The writing section is static — there is no build step and nothing to install.
 
 1. Copy an existing file in `posts/` to `posts/<slug>.html` and rewrite the body. Update the
    `<title>`, `description`, canonical URL, Open Graph tags, and the `BlogPosting` JSON-LD block.
-2. Add a `.post-card` block to the top of the `#writing` section of `index.html` (newest first).
+2. Add a `.post-card` to the `#writing` section of `index.html` (newest first).
 3. Add an `<item>` to `feed.xml` and a `<url>` to `sitemap.xml`.
 
 ## Deployment
 
-Pushes to `main` trigger `.github/workflows/deploy.yml`, which publishes the repository root to
-GitHub Pages.
+Pushes to `main` trigger `.github/workflows/deploy.yml`, which publishes the repository root to GitHub Pages.
 
 ## Security notes
 
-Hosting limitation:
-
-- **CSP is delivered via `<meta>`.** GitHub Pages cannot set response headers, so the policy is in a
-  meta tag. That covers `script-src`, `style-src`, `img-src` and friends, but browsers **ignore
-  `frame-ancestors` when it arrives that way** — it has been removed rather than left in as a claim
-  that does nothing. Real clickjacking protection needs a host that can send headers
-  (Cloudflare Pages `_headers`, Netlify, or an nginx front end).
+- **The CSP is delivered via `<meta>`.** GitHub Pages can't set response headers, so browsers ignore `frame-ancestors` from a meta tag — real clickjacking protection needs a host that can send headers.
+- **Email obfuscation is a speed bump, not a control.** The address is stored reversed and assembled in JavaScript, which only stops scrapers that don't execute JS.
+- **Nothing about employer internals is published.** No network topology, hostnames, ticket numbers or security-stack versions tied to a specific environment.
 
 ## Structure
 
 ```
 .
-├── index.html                     # Single-page portfolio
+├── index.html
 ├── posts/
-│   └── automated-patch-management.html # Long-form post
+│   └── automated-patch-management.html
 ├── assets/
 │   ├── css/
-│   │   ├── style.css              # Theme, animations, print fallback
-│   │   └── noscript.css           # Navigation fallback when JavaScript is off
+│   │   ├── style.css       # Design system, sections, article page, print
+│   │   └── noscript.css    # Loaded via <noscript>
 │   ├── js/
-│   │   └── main.js                # Navigation, scroll UI, motion controls
+│   │   ├── boot.js         # Adds the `js` class before first paint
+│   │   └── main.js         # Globe, nav, reveals, tilt, gallery, timeline, email
 │   └── images/
-│       ├── profile.jpg
-│       └── favicon.svg
-├── feed.xml                       # RSS
-├── sitemap.xml
-├── robots.txt
-├── .github/workflows/deploy.yml   # GitHub Pages deploy action
-└── README.md
+├── feed.xml · sitemap.xml · robots.txt
+└── .github/workflows/deploy.yml
 ```
-
-## Contact
-
-- **Email** — zryanbear@gmail.com
-- **LinkedIn** — [linkedin.com/in/mohamadazmi](https://www.linkedin.com/in/mohamadazmi/)
-- **GitHub** — [github.com/azmiameerdeen](https://github.com/azmiameerdeen)
