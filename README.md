@@ -12,6 +12,7 @@ Dark, editorial and three-dimensional — large display type with serif-italic a
 - **Isometric pipeline** — the Ops Workflow card shows the real run order (lint → dry run → concurrency guard → run & evidence) as a floating 3D stack that spreads apart on hover.
 - **Pinned 3D gallery** — on wide screens the projects flow sideways as you scroll, curving like a coverflow. On phones it becomes a swipeable row.
 - **Flow** — headings rise in word by word, the experience timeline draws itself as you scroll, the nav tucks away on the way down, and tech names drift in marquee rows.
+- **Glow** — a twinkling starfield with shooting stars, a soft light that trails the cursor, rotating beam borders on the headline cards, shimmering gradient type, pulse rings behind the contact headline, and a comet riding the timeline.
 - **Tilt & glare** — cards respond to the pointer with perspective tilt and a light sheen; the portrait's floating chips sit at different depths.
 
 ## Engineering notes

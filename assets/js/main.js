@@ -318,13 +318,14 @@
         ctx.drawImage(SPR_HOT, px - ps / 2, py - ps / 2, ps, ps);
       }
 
-      // Nodes, back to front
+      // Nodes, back to front — additive blending so overlapping glows bloom
+      ctx.globalCompositeOperation = "lighter";
       drawOrder.sort(function (p, q) { return nodes[p].d - nodes[q].d; });
       for (var o = 0; o < N; o++) {
         nd = nodes[drawOrder[o]];
         var dd = nd.d;
         var hot = now >= nd.hit && now <= nd.hit + 650;
-        var base = (nd.patched || hot ? 13 : 9) * nd.s * dpr;
+        var base = (nd.patched || hot ? 18 : 11) * nd.s * dpr;
         var size = base * (0.7 + dd * 0.6);
         ctx.globalAlpha = 0.22 + dd * 0.78;
         if (hot) {
@@ -341,6 +342,7 @@
         }
       }
       ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = "source-over";
 
       // HUD
       var fs = Math.round(11 * dpr);
@@ -484,7 +486,7 @@
         menuOpen = open;
         toggle.setAttribute("aria-expanded", open ? "true" : "false");
         toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-        document.body.classList.toggle("menu-open", open);
+        root.classList.toggle("menu-open", open);
         if (open) {
           menu.hidden = false;
           nav.classList.remove("is-hidden");
@@ -718,6 +720,7 @@
         c.style.removeProperty("--tz");
         c.style.removeProperty("--cry");
         c.style.removeProperty("--co");
+        c.style.removeProperty("--cg");
       });
     }
 
@@ -758,6 +761,7 @@
         cards[i].style.setProperty("--cry", clamp(-d * 30, -34, 34).toFixed(2) + "deg");
         cards[i].style.setProperty("--tz", (-Math.abs(d) * 240).toFixed(1) + "px");
         cards[i].style.setProperty("--co", clamp(1 - Math.abs(d) * 0.7, 0.3, 1).toFixed(3));
+        cards[i].style.setProperty("--cg", clamp(1 - Math.abs(d) * 3.2, 0, 1).toFixed(3));
       }
     }
 
@@ -767,6 +771,22 @@
     if (mqReduce.addEventListener) mqReduce.addEventListener("change", measure);
     window.addEventListener("load", measure);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+    // Anything that changes the page's size (late fonts, images, a viewport
+    // change that fires no resize event) moves the pin, so re-measure.
+    if ("ResizeObserver" in window) {
+      var roTimer, lastW = 0, lastH = 0;
+      new ResizeObserver(function () {
+        var w = window.innerWidth, h = root.scrollHeight;
+        if (w === lastW && h === lastH) return;
+        lastW = w;
+        lastH = h;
+        clearTimeout(roTimer);
+        roTimer = setTimeout(function () {
+          measure();
+          lastH = root.scrollHeight;
+        }, 150);
+      }).observe(document.body);
+    }
     measure();
   }
 
@@ -780,7 +800,7 @@
     var roles = $$(".role", wrap);
 
     if (reduced()) {
-      fill.style.setProperty("--tl", "1");
+      wrap.style.setProperty("--tl", "1");
       roles.forEach(function (r) { r.classList.add("is-reached"); });
       return;
     }
@@ -789,7 +809,7 @@
       var r = wrap.getBoundingClientRect();
       var line = window.innerHeight * 0.62;
       var p = clamp((line - r.top) / r.height, 0, 1);
-      fill.style.setProperty("--tl", p.toFixed(4));
+      wrap.style.setProperty("--tl", p.toFixed(4));
       for (var i = 0; i < roles.length; i++) {
         roles[i].classList.toggle("is-reached", roles[i].getBoundingClientRect().top < line);
       }
@@ -855,6 +875,230 @@
   /* ------------------------------------------------------------------------
      Boot
      ------------------------------------------------------------------------ */
+  /* ------------------------------------------------------------------------
+     11. Starfield — twinkling, drifting stars with the odd shooting star.
+         Parallax on pointer and scroll. A still frame under reduced motion.
+     ------------------------------------------------------------------------ */
+  function initSky() {
+    var canvas = $("#sky");
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    var tints = ["255,255,255", "190,210,255", "150,240,225", "215,190,255"];
+    var W = 0, H = 0, dpr = 1, stars = [];
+    var px = 0, py = 0, tx = 0, ty = 0, sy = 0;
+    var shoot = null, nextShoot = 0, running = false, last = 0, builtW = 0;
+
+    function build() {
+      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      W = canvas.width = Math.round(window.innerWidth * dpr);
+      H = canvas.height = Math.round(window.innerHeight * dpr);
+      // Phones fire resize every time the address bar slides in or out. Keep
+      // the same stars unless the width really changed, or they'd re-shuffle.
+      if (stars.length && window.innerWidth === builtW) {
+        draw(performance.now());
+        return;
+      }
+      builtW = window.innerWidth;
+      var n = clamp(Math.round((window.innerWidth * window.innerHeight) / 9000), 40, 170);
+      stars = [];
+      for (var i = 0; i < n; i++) {
+        stars.push({
+          x: Math.random(), y: Math.random(), z: 0.25 + Math.random() * 0.75,
+          r: 0.4 + Math.random() * 1.3, p: Math.random() * 6.28, s: 0.4 + Math.random() * 1.4,
+          c: tints[i % tints.length]
+        });
+      }
+      draw(performance.now());
+    }
+
+    function draw(now) {
+      ctx.clearRect(0, 0, W, H);
+      var still = reduced();
+      for (var i = 0; i < stars.length; i++) {
+        var s = stars[i];
+        var tw = still ? 0.8 : 0.55 + 0.45 * Math.sin(now * 0.001 * s.s + s.p);
+        var x = (((s.x * W + px * s.z * 34 * dpr) % W) + W) % W;
+        var drift = still ? 0 : now * 0.004 * s.z * dpr;
+        var y = (((s.y * H - sy * s.z * 0.12 * dpr - drift + py * s.z * 34 * dpr) % H) + H) % H;
+        var r = s.r * s.z * dpr;
+        ctx.fillStyle = "rgba(" + s.c + "," + (tw * (0.25 + s.z * 0.6)).toFixed(3) + ")";
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, 6.2832);
+        ctx.fill();
+        if (s.r > 1.3) {
+          ctx.fillStyle = "rgba(" + s.c + "," + (tw * 0.1).toFixed(3) + ")";
+          ctx.beginPath();
+          ctx.arc(x, y, r * 4.5, 0, 6.2832);
+          ctx.fill();
+        }
+      }
+      if (shoot) {
+        var t = (now - shoot.t0) / shoot.dur;
+        if (t >= 1) {
+          shoot = null;
+        } else {
+          var hx = shoot.x + shoot.dx * t, hy = shoot.y + shoot.dy * t;
+          var len = 190 * dpr, m = Math.sqrt(shoot.dx * shoot.dx + shoot.dy * shoot.dy);
+          var bx = hx - (shoot.dx / m) * len, by = hy - (shoot.dy / m) * len;
+          var g = ctx.createLinearGradient(hx, hy, bx, by);
+          g.addColorStop(0, "rgba(255,255,255," + (Math.sin(Math.PI * t) * 0.9).toFixed(3) + ")");
+          g.addColorStop(0.3, "rgba(150,190,255," + (Math.sin(Math.PI * t) * 0.4).toFixed(3) + ")");
+          g.addColorStop(1, "rgba(150,190,255,0)");
+          ctx.strokeStyle = g;
+          ctx.lineWidth = 1.6 * dpr;
+          ctx.lineCap = "round";
+          ctx.beginPath();
+          ctx.moveTo(hx, hy);
+          ctx.lineTo(bx, by);
+          ctx.stroke();
+        }
+      }
+    }
+
+    function frame(now) {
+      if (!running) return;
+      requestAnimationFrame(frame);
+      if (now - last < 33) return; // ~30fps is plenty for stars
+      last = now;
+      px += (tx - px) * 0.05;
+      py += (ty - py) * 0.05;
+      if (!shoot && now > nextShoot) {
+        var dir = Math.random() < 0.5 ? 1 : -1;
+        shoot = {
+          t0: now, dur: 900 + Math.random() * 500,
+          x: (0.15 + Math.random() * 0.7) * W, y: Math.random() * 0.4 * H,
+          dx: dir * (0.25 + Math.random() * 0.2) * W, dy: (0.12 + Math.random() * 0.14) * H
+        };
+        nextShoot = now + 5000 + Math.random() * 7000;
+      }
+      draw(now);
+    }
+    function start() {
+      if (running || reduced() || document.hidden) return;
+      running = true;
+      nextShoot = performance.now() + 2500;
+      requestAnimationFrame(frame);
+    }
+
+    scrollFns.push(function (y) { sy = y; });
+    resizeFns.push(build);
+    if (finePointer) {
+      window.addEventListener("pointermove", function (e) {
+        tx = e.clientX / window.innerWidth - 0.5;
+        ty = e.clientY / window.innerHeight - 0.5;
+      }, { passive: true });
+    }
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) running = false; else start();
+    });
+    build();
+    start();
+  }
+
+  /* ------------------------------------------------------------------------
+     12. Cursor light — a soft glow that trails the pointer behind the content
+     ------------------------------------------------------------------------ */
+  function initCursorGlow() {
+    var el = $(".cursor-glow");
+    if (!el || !finePointer || reduced()) return;
+    var x = 0, y = 0, tx = 0, ty = 0, raf = 0, on = false;
+
+    function tick() {
+      x += (tx - x) * 0.14;
+      y += (ty - y) * 0.14;
+      el.style.setProperty("--cx", x.toFixed(1) + "px");
+      el.style.setProperty("--cy", y.toFixed(1) + "px");
+      raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.5 ? requestAnimationFrame(tick) : 0;
+    }
+    window.addEventListener("pointermove", function (e) {
+      tx = e.clientX;
+      ty = e.clientY;
+      if (!on) {
+        on = true;
+        x = tx;
+        y = ty;
+        el.classList.add("is-on");
+      }
+      if (!raf) raf = requestAnimationFrame(tick);
+    }, { passive: true });
+    root.addEventListener("pointerleave", function () {
+      on = false;
+      el.classList.remove("is-on");
+    });
+  }
+
+  /* ------------------------------------------------------------------------
+     13. Magnetic buttons — they lean a little toward the pointer
+     ------------------------------------------------------------------------ */
+  function initMagnetic() {
+    if (!finePointer || reduced()) return;
+    $$(".btn, .nav-cta").forEach(function (el) {
+      el.addEventListener("pointermove", function (e) {
+        var r = el.getBoundingClientRect();
+        el.style.setProperty("--mx", ((e.clientX - r.left - r.width / 2) * 0.2).toFixed(1) + "px");
+        el.style.setProperty("--my", ((e.clientY - r.top - r.height / 2) * 0.28).toFixed(1) + "px");
+      });
+      el.addEventListener("pointerleave", function () {
+        el.style.setProperty("--mx", "0px");
+        el.style.setProperty("--my", "0px");
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------------
+     14. Section labels decode themselves as they scroll into view
+     ------------------------------------------------------------------------ */
+  function initScramble() {
+    if (reduced() || !("IntersectionObserver" in window)) return;
+    var glyphs = "01<>/\\_#%&*+=-";
+
+    function run(node, txt) {
+      var start = performance.now(), dur = 900;
+      (function tick(now) {
+        var t = clamp((now - start) / dur, 0, 1);
+        var keep = Math.floor(t * txt.length);
+        var out = txt.slice(0, keep);
+        for (var i = keep; i < txt.length; i++) {
+          out += txt[i] === " " ? " " : glyphs[Math.floor(Math.random() * glyphs.length)];
+        }
+        node.textContent = t === 1 ? txt : out;
+        if (t < 1) requestAnimationFrame(tick);
+      })(start);
+    }
+
+    var jobs = [];
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        io.unobserve(entry.target);
+        for (var i = 0; i < jobs.length; i++) {
+          if (jobs[i].el === entry.target) run(jobs[i].node, jobs[i].txt);
+        }
+      });
+    }, { threshold: 0.6 });
+
+    $$(".eyebrow").forEach(function (el) {
+      var node = el.lastChild;
+      if (node && node.nodeType === 3 && node.textContent.trim()) {
+        jobs.push({ el: el, node: node, txt: node.textContent });
+        io.observe(el);
+      }
+    });
+  }
+
+  /* ------------------------------------------------------------------------
+     15. Hero recedes as you scroll away from it
+     ------------------------------------------------------------------------ */
+  function initHeroScroll() {
+    var hero = $("#top");
+    if (!hero || reduced()) return;
+    scrollFns.push(function (y) {
+      hero.style.setProperty("--hs", clamp(y / (window.innerHeight * 0.9), 0, 1).toFixed(3));
+    });
+  }
+
   initSplit();
   initFleet();
   initNav();
@@ -865,5 +1109,10 @@
   initTimeline();
   initEmail();
   initClock();
+  initSky();
+  initCursorGlow();
+  initMagnetic();
+  initScramble();
+  initHeroScroll();
   runScroll();
 })();
